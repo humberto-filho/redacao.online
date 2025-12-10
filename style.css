@@ -1,0 +1,285 @@
+:root {
+    --bg-color: #f3f4f6;
+    --paper-color: #ffffff;
+    --line-color: #a5b4fc;
+    /* Light indigo line */
+    --accent-color: #4f46e5;
+    --text-color: #1f2937;
+    --header-font: 'Playfair Display', serif;
+    --ui-font: 'Inter', sans-serif;
+
+    --line-height: 32px;
+    /* Fixed line height for alignment */
+    --paper-width: 210mm;
+    /* A4 approx width for screen */
+    --paper-padding: 2rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: var(--ui-font);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 4rem;
+}
+
+header {
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-family: var(--header-font);
+    font-size: 2rem;
+    color: var(--accent-color);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+main {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Controls */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.font-controls select {
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-family: var(--ui-font);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.export-controls button {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.export-controls button:hover {
+    background-color: #4338ca;
+}
+
+/* Planner */
+.planner-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+}
+
+#planner-area {
+    width: 100%;
+    min-height: 150px;
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: var(--ui-font);
+    resize: vertical;
+    font-size: 1rem;
+    background: white;
+}
+
+/* Essay Paper */
+.essay-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.title-container {
+    width: 100%;
+    max-width: var(--paper-width);
+    text-align: center;
+}
+
+#essay-title {
+    width: 100%;
+    padding: 0.5rem;
+    font-family: Arial, sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.3s;
+    color: var(--text-color);
+}
+
+#essay-title:focus {
+    border-bottom-color: var(--accent-color);
+}
+
+#essay-title::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.essay-paper {
+    position: relative;
+    width: 100%;
+    max-width: var(--paper-width);
+    background: var(--paper-color);
+    min-height: calc(30 * var(--line-height) + var(--paper-padding) * 2);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding: var(--paper-padding) calc(var(--paper-padding) + 10px);
+    /* Extra right padding for scrollbar prevention/looks */
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* This draws the lines */
+.lines-background {
+    position: absolute;
+    top: var(--paper-padding);
+    left: var(--paper-padding);
+    right: var(--paper-padding);
+    bottom: var(--paper-padding);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.line-numbers {
+    position: absolute;
+    top: var(--paper-padding);
+    left: var(--paper-padding);
+    width: 30px;
+    /* Space for numbers */
+    height: calc(30 * var(--line-height));
+    display: flex;
+    flex-direction: column;
+    z-index: 0;
+    pointer-events: none;
+    color: var(--accent-color);
+    font-family: var(--ui-font);
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.line-number {
+    height: var(--line-height);
+    line-height: var(--line-height);
+    text-align: right;
+    padding-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* We will use a repeating gradient for lines */
+.essay-paper::before {
+    content: '';
+    position: absolute;
+    top: var(--paper-padding);
+    left: var(--paper-padding);
+    right: var(--paper-padding);
+    height: calc(30 * var(--line-height));
+    background-image: repeating-linear-gradient(transparent,
+            transparent calc(var(--line-height) - 1px),
+            var(--line-color) calc(var(--line-height) - 1px),
+            var(--line-color) var(--line-height));
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Side margin line */
+.essay-paper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--paper-padding) + 40px);
+    /* Left margin line */
+    width: 1px;
+    background-color: #f87171;
+    /* Red margin line */
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+#essay-text {
+    position: relative;
+    width: 100%;
+    /* Match lines width */
+    height: calc(30 * var(--line-height));
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    line-height: var(--line-height);
+    font-family: 'Caveat', cursive;
+    /* Default */
+    font-size: 22px;
+    /* Needs calibration with line-height */
+    color: #374151;
+    z-index: 1;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    padding-left: 45px;
+    /* Offset for the red margin line */
+}
+
+.line-counter {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-align: right;
+    width: 100%;
+    max-width: var(--paper-width);
+}
+
+/* Font Sizes Modifiers */
+.font-small #essay-text {
+    font-size: 18px;
+}
+
+.font-medium #essay-text {
+    font-size: 22px;
+}
+
+.font-large #essay-text {
+    font-size: 26px;
+}

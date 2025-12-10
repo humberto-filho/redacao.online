@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>redacao.online</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>redacao.online</h1>
+    </header>
+
+    <main>
+        <div class="controls-bar">
+            <div class="font-controls">
+                <select id="fontFamily">
+                    <option value="'Caveat', cursive">Manuscrita (Caveat)</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Roboto', sans-serif">Roboto (Sans)</option>
+                    <option value="'Playfair Display', serif">Playfair (Serif)</option>
+                </select>
+                <select id="fontSize">
+                    <option value="small">Pequeno</option>
+                    <option value="medium" selected>Médio</option>
+                    <option value="large">Grande</option>
+                </select>
+            </div>
+            <div class="export-controls">
+                <button id="btn-docx">Exportar DOCX</button>
+                <button id="btn-pdf">Exportar PDF</button>
+                <button id="btn-txt">Exportar TXT</button>
+            </div>
+        </div>
+
+        <section class="planner-section">
+            <h2>Planejamento</h2>
+            <textarea id="planner-area" placeholder="Planeje seu texto aqui..."></textarea>
+        </section>
+
+        <section class="essay-section">
+            <div class="title-container">
+                <input type="text" id="essay-title" placeholder="Título da Redação" maxlength="90">
+            </div>
+            <div class="essay-paper" id="essay-paper">
+                <div class="line-numbers" id="line-numbers"></div>
+                <div class="lines-container" id="lines-background">
+                </div>
+                <textarea id="essay-text" class="essay-input" spellcheck="false"
+                    placeholder="Comece sua redação..."></textarea>
+            </div>
+            <div class="line-counter">Linhas usadas: <span id="line-count-display">0</span>/30</div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
